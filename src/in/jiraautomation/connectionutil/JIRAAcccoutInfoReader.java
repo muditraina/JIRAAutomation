@@ -30,7 +30,7 @@ public class JIRAAcccoutInfoReader {
 			properties.load(reader);
 
 			logger.info(JiraAutomationMessages.READING_JIRA_INFO);
-			
+
 			String pName = properties.getProperty("projectName");
 			String email = properties.getProperty("email");
 			String token = properties.getProperty("apiToken");
@@ -38,7 +38,7 @@ public class JIRAAcccoutInfoReader {
 			jiraAcc = new JIRAAccount(pName, email, token);
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error(JiraAutomationMessages.PROPERTIES_FILE_NOT_FOUND);
 		}
 
 	}

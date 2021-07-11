@@ -198,9 +198,14 @@ public class JIRAServiceImpl implements JIRAService {
 
 		boolean isValidInfo = false;
 
-		if (isNotNullEmpty(jiraAcc.getProjectName()) && isNotNullEmpty(jiraAcc.getEmail())
-				&& isNotNullEmpty(jiraAcc.getApiToken())) {
-			isValidInfo = true;
+		if (jiraAcc != null) {
+
+			if (isNotNullEmpty(jiraAcc.getProjectName()) && isNotNullEmpty(jiraAcc.getEmail())
+					&& isNotNullEmpty(jiraAcc.getApiToken())) {
+				isValidInfo = true;
+			}
+		} else {
+			throw new JIRAInvalidInfoException(JiraAutomationMessages.INVALID_INFO_OR_INFO_NOT_FOUND);
 		}
 		return isValidInfo;
 
