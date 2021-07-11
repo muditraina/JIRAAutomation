@@ -35,7 +35,6 @@ public class JIRAAttachment {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return this.attachmentName + " " + this.mimeType;
 	}
 

@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import in.jiraautomation.entity.JIRAAttachment;
+import in.jiraautomation.exception.JIRAConnectivityException;
 import in.jiraautomation.exception.JIRAInvalidInfoException;
 
 /**
@@ -23,7 +24,7 @@ public interface JIRAService {
 	 * @return
 	 * @throws JIRAInvalidInfoException
 	 */
-	public JSONArray getAllDefectsSummary() throws JIRAInvalidInfoException;
+	public JSONArray getAllDefectsSummary() throws JIRAInvalidInfoException, JIRAConnectivityException;
 
 	/**
 	 * Gets all attachments for specified JIRA ticket.
@@ -32,7 +33,7 @@ public interface JIRAService {
 	 * @return
 	 * @throws JIRAInvalidInfoException
 	 */
-	public List<JIRAAttachment> getAllDefectsAttachment(String id) throws JIRAInvalidInfoException;
+	public List<JIRAAttachment> getAllDefectsAttachment(String id) throws JIRAInvalidInfoException, JIRAConnectivityException;
 
 	
 	/**

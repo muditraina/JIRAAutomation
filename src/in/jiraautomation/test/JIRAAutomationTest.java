@@ -18,6 +18,7 @@ import in.jiraautomation.exception.JIRAConnectivityException;
 import in.jiraautomation.exception.JIRAInvalidInfoException;
 import in.jiraautomation.service.JIRAService;
 import in.jiraautomation.service.JIRAServiceImpl;
+import in.jiraautomation.util.JiraAutomationMessages;
 
 /**
  * Test class for JIRAAutmation tool, uses testNG framework to execute test
@@ -37,8 +38,6 @@ public class JIRAAutomationTest {
 	 * test case fails if duplicate summary is found.
 	 */
 	@Test
-	// (expectedExceptions = { JIRAInvalidInfoException.class,
-	// JIRAConnectivityException.class })
 	public void testDuplicateSummary() {
 
 		logger.info("***** Running testDuplicateSummary() test case *****");
@@ -70,10 +69,8 @@ public class JIRAAutomationTest {
 			logger.info("***** Running testDuplicateSummary() test case completed *****");
 		} catch (JIRAInvalidInfoException e) {
 			Assert.fail(e.getMessage(), e);
-			logger.error(e.getMessage());
 		} catch (JIRAConnectivityException ce) {
 			Assert.fail(ce.getMessage(), ce);
-			logger.error(ce.getMessage());
 		}
 
 	}
@@ -88,8 +85,6 @@ public class JIRAAutomationTest {
 	 * @param ticketID
 	 */
 	@Test
-	// (expectedExceptions = { JIRAInvalidInfoException.class,
-	// JIRAConnectivityException.class })
 	@Parameters("ticketID")
 	public void testDupilcateAttachmentName(String ticketID) {
 
@@ -136,8 +131,10 @@ public class JIRAAutomationTest {
 			if (uniqueAttachments.size() > 0) {
 
 				for (String attachmemt : uniqueAttachments) {
-					logger.info("Duplicate attachment containing chars " + attachmemt + " type");
+					logger.info(JiraAutomationMessages.DUPLICATE_ATTACHMENT + attachmemt + " type");
 				}
+			} else {
+				logger.info(JiraAutomationMessages.NO_DUPLICATE_ATTACHMENT);
 			}
 
 			Assert.assertEquals(count, 0);
@@ -146,10 +143,8 @@ public class JIRAAutomationTest {
 
 		} catch (JIRAInvalidInfoException e) {
 			Assert.fail(e.getMessage(), e);
-			logger.error(e.getMessage());
 		} catch (JIRAConnectivityException ce) {
 			Assert.fail(ce.getMessage(), ce);
-			logger.error(ce.getMessage());
 		}
 	}
 }

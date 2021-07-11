@@ -5,6 +5,12 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+
+/**
+ * Listener class for JIARAAutomationTest , which logs appropriate message on type of run.
+ * @author Mudit Raina
+ *
+ */
 public class JIRAAutomationTestListeners implements ITestListener {
 
 	Logger logger = Logger.getLogger(JIRAAutomationTestListeners.class);
@@ -12,12 +18,12 @@ public class JIRAAutomationTestListeners implements ITestListener {
 	@Override
 	public void onTestStart(ITestResult result) {
 
-		logger.info("Starting the test case " + result.getName());
+		logger.info("Starting the test case " + result.getName()+"\n");
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		logger.info("The " + result.getName() + " passed");
+		logger.info("The " + result.getName() + " passed\n");
 	}
 
 	@Override
@@ -33,7 +39,7 @@ public class JIRAAutomationTestListeners implements ITestListener {
 	@Override
 	public void onTestSkipped(ITestResult result) {
 
-		logger.info("The test case " + result.getName() + " skipped");
+		logger.info("The test case " + result.getName() + " skipped\n");
 	}
 
 	@Override
@@ -44,7 +50,7 @@ public class JIRAAutomationTestListeners implements ITestListener {
 	@Override
 	public void onStart(ITestContext context) {
 
-		logger.info("Test cases execution started");
+		logger.info("Test cases execution started\n");
 
 	}
 

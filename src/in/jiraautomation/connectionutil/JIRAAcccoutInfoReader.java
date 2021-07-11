@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import in.jiraautomation.entity.JIRAAccount;
+import in.jiraautomation.util.JiraAutomationMessages;
 
 /**
  * This reader class reads the account information used to authenticate JIRA
@@ -18,7 +19,7 @@ import in.jiraautomation.entity.JIRAAccount;
 public class JIRAAcccoutInfoReader {
 
 	private static JIRAAccount jiraAcc = null;
-	Logger logger = Logger.getLogger(JIRAAcccoutInfoReader.class);
+	static Logger logger = Logger.getLogger(JIRAAcccoutInfoReader.class);
 
 	static {
 
@@ -28,6 +29,8 @@ public class JIRAAcccoutInfoReader {
 			FileReader reader = new FileReader("resources/account.properties");
 			properties.load(reader);
 
+			logger.info(JiraAutomationMessages.READING_JIRA_INFO);
+			
 			String pName = properties.getProperty("projectName");
 			String email = properties.getProperty("email");
 			String token = properties.getProperty("apiToken");
@@ -41,7 +44,7 @@ public class JIRAAcccoutInfoReader {
 	}
 
 	/**
-	 * This returns JIRAAccount instance with populated account info read from
+	 * This returns JIRAAccount instance with populated account info read from a
 	 * properties file.
 	 * 
 	 * @return

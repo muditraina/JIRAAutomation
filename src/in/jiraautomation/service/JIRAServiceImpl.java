@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mashape.unirest.http.HttpResponse;
@@ -19,6 +20,7 @@ import in.jiraautomation.entity.JIRAAccount;
 import in.jiraautomation.entity.JIRAAttachment;
 import in.jiraautomation.exception.JIRAConnectivityException;
 import in.jiraautomation.exception.JIRAInvalidInfoException;
+import in.jiraautomation.util.JiraAutomationMessages;
 
 /**
  * Implementation for JIRAService class.
@@ -28,18 +30,20 @@ import in.jiraautomation.exception.JIRAInvalidInfoException;
  */
 public class JIRAServiceImpl implements JIRAService {
 
+	// JIRA account details loaded up which is read from account.properties file.
 	public static JIRAAccount jiraAccount = JIRAAcccoutInfoReader.loadJIRAAccountInfo();
 
-	Logger logger = Logger.getLogger(JIRAServiceImpl.class);
+	private Logger logger = Logger.getLogger(JIRAServiceImpl.class);
 
 	/**
 	 * Gets summary for all defects in a JIRAProject.
 	 * 
 	 * @return
+	 * @throws JSONException 
 	 * @throws JIRAInvalidInfoException
 	 */
 	@Override
-	public JSONArray getAllDefectsSummary() throws JIRAInvalidInfoException {
+	public JSONArray getAllDefectsSummary() throws JIRAInvalidInfoException, JIRAConnectivityException {
 
 		logger.info("***** Retrieving all summaries for project from JIRA Server *****");
 
@@ -57,20 +61,29 @@ public class JIRAServiceImpl implements JIRAService {
 						.header("Accept", "application/json").asJson();
 
 				if (response.getStatus() != 200) {
-					throw new JIRAConnectivityException(
-							"Issue connecting to your JIRA account, check account info used !");
+
+					if (response.getBody().getObject().has("errorMessages"))
+						throw new JIRAInvalidInfoException(
+								response.getBody().getObject().getJSONArray("errorMessages").getString(0));
+
+					else if (response.getBody().getObject().has("errorMessage"))
+						throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR + "\n"
+								+ response.getBody().getObject().getString("errorMessage"));
+					else
+						throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR);
+
 				}
 
 				jsonArr = response.getBody().getObject().getJSONArray("issues");
 
 				logger.info("***** All summaries for project from JIRA Server retrieved *****");
 			} else {
+				logger.error(JiraAutomationMessages.INCORRECT_INFO);
 				informInvalidAccountInfo(jiraAccount);
 			}
 
 		} catch (UnirestException e) {
-			// throw new JIRAConnectivityException("Issue connecting to your JIRA account,
-			// check account info used !");
+			throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR);
 		}
 
 		return jsonArr;
@@ -83,7 +96,7 @@ public class JIRAServiceImpl implements JIRAService {
 	 * @throws JIRAInvalidInfoException
 	 */
 	@Override
-	public List<JIRAAttachment> getAllDefectsAttachment(String id) throws JIRAInvalidInfoException {
+	public List<JIRAAttachment> getAllDefectsAttachment(String id) throws JIRAInvalidInfoException, JIRAConnectivityException {
 
 		logger.info("***** Retrieving all attachment for ticket " + id + " from JIRA Server *****");
 
@@ -103,11 +116,15 @@ public class JIRAServiceImpl implements JIRAService {
 
 				if (response.getStatus() != 200) {
 
-					// String s =
-					// response.getBody().getObject().getJSONArray("errorMessages").get(0).toString();
+					if (response.getBody().getObject().has("errorMessages"))
+						throw new JIRAInvalidInfoException(
+								response.getBody().getObject().getJSONArray("errorMessages").getString(0));
 
-					throw new JIRAConnectivityException(
-							"Issue connecting to your JIRA account, check account info used !");
+					else if (response.getBody().getObject().has("errorMessage"))
+						throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR + "\n"
+								+ response.getBody().getObject().getString("errorMessage"));
+					else
+						throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR);
 
 				}
 
@@ -124,8 +141,7 @@ public class JIRAServiceImpl implements JIRAService {
 			}
 
 		} catch (UnirestException e) {
-			// throw new JIRAConnectivityException("Issue connecting to your JIRA account,
-			// check account info used !");
+			throw new JIRAConnectivityException(JiraAutomationMessages.CONNECTIVITY_ERROR);
 		}
 
 		return attachmentDetails;
@@ -193,14 +209,13 @@ public class JIRAServiceImpl implements JIRAService {
 	private void informInvalidAccountInfo(JIRAAccount ja) throws JIRAInvalidInfoException {
 
 		if (!isNotNullEmpty(ja.getProjectName())) {
-			throw new JIRAInvalidInfoException("The project name not mentioned. Please specify project name!");
+			throw new JIRAInvalidInfoException(JiraAutomationMessages.INAVLID_PROJECT_NAME);
 		}
 		if (!isNotNullEmpty(ja.getEmail())) {
-			throw new JIRAInvalidInfoException("The account email not mentioned. Please specify email!");
+			throw new JIRAInvalidInfoException(JiraAutomationMessages.INVALID_EMAIL);
 		}
 		if (!isNotNullEmpty(ja.getApiToken())) {
-			throw new JIRAInvalidInfoException("The api token not mentioned. Please specify api token!");
+			throw new JIRAInvalidInfoException(JiraAutomationMessages.INVALID_API_TOKEN);
 		}
 	}
-
 }
