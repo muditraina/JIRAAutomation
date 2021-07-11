@@ -17,6 +17,9 @@ public class JiraAutomationMessages {
 	public static final String INVALID_INFO_OR_INFO_NOT_FOUND = "The account info provided seems to be incorrect. Check the if the account.properties file is present in resource folder ";
 	public static final String READING_JIRA_INFO = "Reading account info from properties file !";
 	public static final String DUPLICATE_ATTACHMENT = "Duplicate attachment containing chars ";
+	public static final String DUPLICATE_ATTACHMENT_EXISTS = "Duplicate attachment exists in your project.";
 	public static final String NO_DUPLICATE_ATTACHMENT = "No Duplicate attachments found in the specified ticket";
 	public static final String PROPERTIES_FILE_NOT_FOUND = "The acoount.properties file not found in resources folder";
+	public static final String DUPLICATE_SUMMARY = "Duplicate summaries exists in your project.";
+	
 }

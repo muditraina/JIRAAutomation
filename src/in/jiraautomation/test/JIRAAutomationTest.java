@@ -64,7 +64,7 @@ public class JIRAAutomationTest {
 					logger.info(count + " duplicates found for summary " + "\"" + string + "\"" + " in your project !");
 			}
 
-			Assert.assertEquals(summaryAll.size(), summaryUnique.size());
+			Assert.assertEquals(summaryAll.size(), summaryUnique.size(), JiraAutomationMessages.DUPLICATE_SUMMARY);
 
 			logger.info("***** Running testDuplicateSummary() test case completed *****");
 		} catch (JIRAInvalidInfoException e) {
@@ -137,7 +137,7 @@ public class JIRAAutomationTest {
 				logger.info(JiraAutomationMessages.NO_DUPLICATE_ATTACHMENT);
 			}
 
-			Assert.assertEquals(count, 0);
+			Assert.assertEquals(count, 0, JiraAutomationMessages.DUPLICATE_ATTACHMENT_EXISTS);
 
 			logger.info("***** Running testDupilcateAttachmentName() test case completed *****");
 
