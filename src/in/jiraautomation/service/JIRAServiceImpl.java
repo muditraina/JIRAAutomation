@@ -39,7 +39,7 @@ public class JIRAServiceImpl implements JIRAService {
 	 * Gets summary for all defects in a JIRAProject.
 	 * 
 	 * @return
-	 * @throws JSONException 
+	 * @throws JSONException
 	 * @throws JIRAInvalidInfoException
 	 */
 	@Override
@@ -96,7 +96,8 @@ public class JIRAServiceImpl implements JIRAService {
 	 * @throws JIRAInvalidInfoException
 	 */
 	@Override
-	public List<JIRAAttachment> getAllDefectsAttachment(String id) throws JIRAInvalidInfoException, JIRAConnectivityException {
+	public List<JIRAAttachment> getAllDefectsAttachment(String id)
+			throws JIRAInvalidInfoException, JIRAConnectivityException {
 
 		logger.info("***** Retrieving all attachment for ticket " + id + " from JIRA Server *****");
 
@@ -172,6 +173,12 @@ public class JIRAServiceImpl implements JIRAService {
 
 	}
 
+	/**
+	 * Encodes the url paramater.
+	 * 
+	 * @param message
+	 * @return
+	 */
 	private String encodeJQL(String message) {
 		try {
 			return URLEncoder.encode(message, "UTF-8");
@@ -181,6 +188,12 @@ public class JIRAServiceImpl implements JIRAService {
 		}
 	}
 
+	/**
+	 * Checks the JIRA account fields for null or empty values.
+	 * 
+	 * @param jiraAcc
+	 * @return
+	 */
 	private boolean checkJIRAInfo(JIRAAccount jiraAcc) {
 
 		boolean isValidInfo = false;
@@ -193,6 +206,12 @@ public class JIRAServiceImpl implements JIRAService {
 
 	}
 
+	/**
+	 * utility method to check null and empty string.
+	 * 
+	 * @param field
+	 * @return
+	 */
 	private static boolean isNotNullEmpty(String field) {
 
 		boolean isValidField = false;
@@ -206,6 +225,13 @@ public class JIRAServiceImpl implements JIRAService {
 
 	}
 
+	/**
+	 * This methods informs in case of null or empty fields found related to JIRA
+	 * authentication.
+	 * 
+	 * @param ja
+	 * @throws JIRAInvalidInfoException
+	 */
 	private void informInvalidAccountInfo(JIRAAccount ja) throws JIRAInvalidInfoException {
 
 		if (!isNotNullEmpty(ja.getProjectName())) {
