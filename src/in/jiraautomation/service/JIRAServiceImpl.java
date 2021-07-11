@@ -174,7 +174,7 @@ public class JIRAServiceImpl implements JIRAService {
 	}
 
 	/**
-	 * Encodes the url paramater.
+	 * Encodes the url paramater for summary.
 	 * 
 	 * @param message
 	 * @return
