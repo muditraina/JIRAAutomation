@@ -23,6 +23,12 @@ public class JIRAAutomationTestListeners implements ITestListener {
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
+		
+		if(result.getName().equalsIgnoreCase("testDuplicateSummary"))
+				logger.info("No Duplicate summary found in your project");
+		if(result.getName().equalsIgnoreCase("testDupilcateAttachmentName"))
+			logger.info("No Duplicate attachment found in your project associated to mentioned ticket");
+		
 		logger.info("The " + result.getName() + " passed\n");
 	}
 
