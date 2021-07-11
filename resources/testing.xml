@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1">
+
+	<listeners>
+		<listener class-name="in.jiraautomation.test.JIRAAutomationTestListeners" />
+	</listeners>
+
+	<test name="test1">
+	<parameter name = "ticketID" value="10000"/>
+	
+		<classes>
+			<class name="in.jiraautomation.test.JIRAAutomationTest" />
+		</classes>
+	</test>
+
+
+</suite>
