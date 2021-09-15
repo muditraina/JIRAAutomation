@@ -9,7 +9,7 @@ package in.jiraautomation.util;
  */
 public class JiraAutomationMessages {
 
-	//comment
+	//comment--
 	public static final String CONNECTIVITY_ERROR = "Issue connecting to your JIRA account, check account info used !";
 	public static final String INVALID_EMAIL = "The account email not mentioned. Please specify email!";
 	public static final String INAVLID_PROJECT_NAME = "The project name not mentioned. Please specify project name!";
