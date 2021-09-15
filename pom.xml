@@ -51,5 +51,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>JIRAAutomation</finalName>
 	</build>
 </project>
